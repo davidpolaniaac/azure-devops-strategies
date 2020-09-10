@@ -1,0 +1,8 @@
+stages:
+  - template: build.yml
+  - template: deploy.yml
+    parameters:
+      name: DEV
+  - template: deploy.yml
+    parameters:
+      name: QA

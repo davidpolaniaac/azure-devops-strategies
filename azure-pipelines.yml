@@ -1,0 +1,16 @@
+name: $(Build.SourceBranchName).$(date:yyyyMMdd)$(rev:.r)
+
+variables:
+  - template: pipeline/vars.yml
+
+trigger:
+  - master
+
+stages:
+  - template: pipeline/base.yml
+  - ${{ if eq(variables.strategy, 'runonce') }}:
+    - template: strategy/runonce.yml
+  - ${{ if eq(variables.strategy, 'rolling') }}:
+    - template: strategy/rolling.yml
+  - ${{ if eq(variables.strategy, 'canary') }}:
+    - template: strategy/canary.yml

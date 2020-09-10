@@ -1,0 +1,19 @@
+stages:
+  - stage: Build
+    jobs:
+      - job: build
+        steps:
+          - script: echo Building!
+            displayName: Build
+          - script: echo Unit Test!
+            displayName: Unit Test
+          - task: CopyFiles@2
+            displayName: Copy
+            inputs:
+              SourceFolder: "src"
+              Contents: "**"
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+              CleanTargetFolder: true
+          - publish: $(Build.ArtifactStagingDirectory)
+            artifact: WebApp
+            displayName: Publish

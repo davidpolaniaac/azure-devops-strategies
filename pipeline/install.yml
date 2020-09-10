@@ -1,0 +1,9 @@
+steps:
+  - download: current
+    artifact: WebApp
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: "$(Agent.BuildDirectory)/WebApp"
+      Contents: "**"
+      TargetFolder: "/var/www/html/"
+      CleanTargetFolder: true

@@ -1,0 +1,15 @@
+parameters:
+  - name: name
+    default: ""
+
+stages:
+  - stage: ${{ parameters.name }}
+    jobs:
+      - deployment: Deploy
+        environment: ${{ parameters.name }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - script: echo deploy $(Build.BuildNumber) in ${{ parameters.name }}
+                  displayName: Install
