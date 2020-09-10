@@ -1,0 +1,33 @@
+stages:
+  - stage: PDN_Rolling
+    jobs:
+      - deployment: DeployWeb
+        displayName: web
+        environment:
+          name: PDN
+          resourceType: VirtualMachine
+          tags: web
+        strategy:
+          rolling:
+            maxParallel: 2
+            preDeploy:
+              steps:
+                - download: current
+                  artifact: WebApp
+                - script: echo initialize, cleanup, backup, install certs
+            deploy:
+              steps:
+                - template: ../pipeline/install.yml
+            routeTraffic:
+              steps:
+                - script: echo routing traffic
+            postRouteTraffic:
+              steps:
+                - script: echo health check post-route traffic
+            on:
+              failure:
+                steps:
+                  - script: echo Restore from backup! This is on failure
+              success:
+                steps:
+                  - script: echo Notify! This is on success

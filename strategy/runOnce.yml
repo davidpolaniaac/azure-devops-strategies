@@ -1,0 +1,14 @@
+stages:
+  - stage: PDN_RunOne
+    jobs:
+      - deployment: DeployWeb
+        displayName: deploy Web App
+        environment:
+          name: PDN
+          resourceType: VirtualMachine
+          tags: web
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - template: ../pipeline/install.yml

@@ -1,0 +1,16 @@
+stages:
+  - stage: PDN_Canary
+    jobs:
+      - deployment: DeployWeb
+        displayName: web
+        environment:
+          name: PDN
+          resourceType: VirtualMachine
+          tags: web
+        strategy:
+          canary:
+            increments: [10,20]
+            deploy:
+              steps:
+                - script: echo initialize, cleanup, backup, install certs
+    
