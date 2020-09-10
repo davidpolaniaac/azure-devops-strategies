@@ -1,0 +1,22 @@
+trigger:
+    - none
+
+resources:
+    pipelines:
+    - pipeline: pipeline-devops  # identifier for the pipeline resource
+      source: devops-strategies # source pipeline definition name
+      trigger: 
+        branches:
+        - master
+  
+steps:
+- script: |
+    echo $(resources.pipeline.pipeline-devops.pipelineID)
+    echo $(resources.pipeline.pipeline-devops.runName)
+    echo $(resources.pipeline.pipeline-devops.runID)
+    echo $(resources.pipeline.pipeline-devops.runURI)
+    echo $(resources.pipeline.pipeline-devops.sourceBranch)
+    echo $(resources.pipeline.pipeline-devops.sourceCommit)
+    echo $(resources.pipeline.pipeline-devops.sourceProvider)
+    echo $(resources.pipeline.pipeline-devops.requestedFor)
+    echo $(resources.pipeline.pipeline-devops.requestedForID)
